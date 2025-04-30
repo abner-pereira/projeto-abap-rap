@@ -7,6 +7,6 @@
 - Learn...  
 
 #### Fonte:
-+ [ABAP RESTful Application Programming Model](https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US&version=sap_btp)
-+ [Getting Started with the ABAP RESTful Application Programming Model (RAP)](https://community.sap.com/t5/technology-blogs-by-sap/getting-started-with-the-abap-restful-application-programming-model-rap/ba-p/13420829)
++ [Building Apps with the ABAP RESTful Application Programming Model](https://learning.sap.com/courses/building-apps-with-the-abap-restful-application-programming-model)
++ [ABAP RESTful Application Programming Model](https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model?locale=en-US)
 + [ABAP RAP - SAP Community](https://pages.community.sap.com/topics/abap/rap)
