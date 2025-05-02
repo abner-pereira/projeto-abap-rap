@@ -1,0 +1,11 @@
+@EndUserText.label: 'Access control for ZI_ALP_RAP_Travel'
+@MappingRole: true
+define role ZI_ALP_RAP_TRAVEL {
+    grant
+        select
+            on
+                ZI_ALP_RAP_TRAVEL
+                    where ( TravelStatus ) = aspect pfcg_auth ( ZALPOSTAT, ZALPOSTAT, ACTVT = '03' ) 
+                      and CurrencyCode     = 'EUR'
+                       or true; //Para continuar sendo exibido                      
+}
