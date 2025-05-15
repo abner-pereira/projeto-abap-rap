@@ -1,11 +1,11 @@
 managed; //implementation in class zbp_i_alp_rap_travel unique;
-//strict ( 2 );
+strict;
 
 define behavior for ZI_ALP_RAP_Travel alias Travel
 implementation in class zbp_i_alp_rap_travel unique
 persistent table zalprap_atrav
 lock master
-//authorization master ( instance )
+authorization master ( instance )
 etag master LocalLastChangedAt
 {
   create;
@@ -56,7 +56,7 @@ define behavior for ZI_ALP_RAP_Booking alias Booking
 implementation in class zbp_i_alp_rap_booking unique
 persistent table zalprap_abook
 lock dependent by _Travel
-//authorization dependent by _Travel
+authorization dependent by _Travel
 etag master LocalLastChangedAt
 {
   update;
