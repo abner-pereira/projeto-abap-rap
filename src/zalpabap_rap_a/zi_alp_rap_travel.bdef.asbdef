@@ -1,10 +1,12 @@
 managed; //implementation in class zbp_i_alp_rap_travel unique;
 strict;
+with draft;
 
 define behavior for ZI_ALP_RAP_Travel alias Travel
 implementation in class zbp_i_alp_rap_travel unique
 persistent table zalprap_atrav
-lock master
+draft table zalprap_dtrav
+lock master total etag LastChangedAt
 authorization master ( instance )
 etag master LocalLastChangedAt
 {
@@ -29,7 +31,19 @@ etag master LocalLastChangedAt
   validation validateCustomer on save { field CustomerID; create; }
   validation validateDates on save { field BeginDate, EndDate; create; }
 
-  association _Booking { create; }
+  draft determine action Prepare
+  {
+    validation validateAgency;
+    validation validateCustomer;
+    validation validateDates;
+  }
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+
+  association _Booking { create; with draft; }
 
   mapping for zalprap_atrav
     {
@@ -55,6 +69,7 @@ etag master LocalLastChangedAt
 define behavior for ZI_ALP_RAP_Booking alias Booking
 implementation in class zbp_i_alp_rap_booking unique
 persistent table zalprap_abook
+draft table zalprap_dbook
 lock dependent by _Travel
 authorization dependent by _Travel
 etag master LocalLastChangedAt
@@ -69,7 +84,7 @@ etag master LocalLastChangedAt
   determination calculateBookingID on modify { create; }
   determination calculateTotalPrice on modify { field FlightPrice, CurrencyCode; }
 
-  association _Travel;
+  association _Travel { with draft; }
 
   mapping for zalprap_abook
     {

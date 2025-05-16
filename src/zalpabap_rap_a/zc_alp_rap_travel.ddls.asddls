@@ -5,6 +5,7 @@
 @Search.searchable: true
 
 define root view entity ZC_ALP_RAP_Travel
+  provider contract transactional_query
   as projection on ZI_ALP_RAP_Travel as Travel
 {
   key TravelUUID,
@@ -38,7 +39,7 @@ define root view entity ZC_ALP_RAP_Travel
 
       /* Associations */
       _Agency,
-      _Booking : redirected to composition child ZC_ALP_RAP_Booking,
+      _Booking : redirected to composition child ZC_ALP_RAP_BOOKING,
       _Currency,
       _Customer
 }
