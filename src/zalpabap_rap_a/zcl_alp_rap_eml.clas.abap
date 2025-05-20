@@ -10,7 +10,11 @@ CLASS zcl_alp_rap_eml DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_alp_rap_eml IMPLEMENTATION.
+
+
+CLASS ZCL_ALP_RAP_EML IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
 
     CONSTANTS lc_uline TYPE string

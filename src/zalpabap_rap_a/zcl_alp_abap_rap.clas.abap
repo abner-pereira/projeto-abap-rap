@@ -10,7 +10,11 @@ CLASS zcl_alp_abap_rap DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_alp_abap_rap IMPLEMENTATION.
+
+
+CLASS ZCL_ALP_ABAP_RAP IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
 
     "Delete existing entries in the database table
