@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>ZBP_I_ALP_RAP_TRAVEL_U</CLSNAME>
+    <CLSNAME>ZBP_I_ALP_RAP_BOOKING_U</CLSNAME>
     <LANGU>E</LANGU>
     <DESCRIPT>Behavior Implementation for ZI_ALP_RAP_TRAVEL_U</DESCRIPT>
     <CATEGORY>06</CATEGORY>
@@ -12,7 +12,6 @@
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
     <CLSDEFINT>ZI_ALP_RAP_TRAVEL_U</CLSDEFINT>
-    <WITH_UNIT_TESTS>X</WITH_UNIT_TESTS>
    </VSEOCLASS>
   </asx:values>
  </asx:abap>
