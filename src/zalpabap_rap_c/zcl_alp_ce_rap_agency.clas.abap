@@ -5,6 +5,7 @@ CLASS zcl_alp_ce_rap_agency DEFINITION
 
   PUBLIC SECTION.
     INTERFACES if_oo_adt_classrun.
+    INTERFACES if_rap_query_provider.
 
     TYPES t_agency_range TYPE RANGE OF zsc_alp_rap_agency=>tys_z_travel_agency_es_5_type-agency_id.
     TYPES t_business_data TYPE TABLE OF zsc_alp_rap_agency=>tys_z_travel_agency_es_5_type.
@@ -81,7 +82,7 @@ CLASS zcl_alp_ce_rap_agency IMPLEMENTATION.
 
     odata_client_proxy = /iwbep/cl_cp_factory_remote=>create_v2_remote_proxy(
       EXPORTING
-         is_proxy_model_key      = VALUE #( repository_id       = 'DEFAULT'
+        is_proxy_model_key       = VALUE #( repository_id       = 'DEFAULT'
                                             proxy_model_id      = 'ZSC_ALP_RAP_AGENCY'
                                             proxy_model_version = '0001' )
         io_http_client           = http_client
@@ -129,6 +130,44 @@ CLASS zcl_alp_ce_rap_agency IMPLEMENTATION.
     IF is_count_requested = abap_true.
       count = read_list_response->get_count( ).
     ENDIF.
+
+  ENDMETHOD.
+
+  METHOD if_rap_query_provider~select.
+
+    DATA business_data TYPE t_business_data.
+    DATA count TYPE int8.
+
+    DATA(top)  = io_request->get_paging( )->get_page_size( ).
+    DATA(skip) = io_request->get_paging( )->get_offset( ).
+    DATA(requested_fields) = io_request->get_requested_elements( ).
+    DATA(sort_order) = io_request->get_sort_elements( ).
+
+    TRY.
+        DATA(filter_condition) = io_request->get_filter( )->get_as_ranges( ).
+
+        get_agencies(
+          EXPORTING
+            filter_cond        = filter_condition
+            top                = CONV i( top )
+            skip               = CONV i( skip )
+            is_data_requested  = io_request->is_data_requested( )
+            is_count_requested = io_request->is_total_numb_of_rec_requested( )
+          IMPORTING
+            business_data = business_data
+            count         = count
+          ).
+
+        IF io_request->is_total_numb_of_rec_requested( ).
+          io_response->set_total_number_of_records( count ).
+        ENDIF.
+        IF io_request->is_data_requested( ).
+          io_response->set_data( business_data ).
+        ENDIF.
+
+      CATCH cx_root INTO DATA(exception).
+        DATA(exception_message) = cl_message_helper=>get_latest_t100_exception( exception )->if_message~get_longtext( ).
+    ENDTRY.
 
   ENDMETHOD.
 
