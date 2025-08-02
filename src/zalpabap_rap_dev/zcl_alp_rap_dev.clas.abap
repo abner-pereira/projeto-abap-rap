@@ -20,7 +20,12 @@ CLASS zcl_alp_rap_dev IMPLEMENTATION.
   ENDMETHOD.
   METHOD insert_dado.
 
-    DELETE FROM zalp_employee.
+    DELETE FROM: zalp_activity,
+                 zalp_outsourcing,
+                 zalp_employee,
+                 zalp_customer.
+
+    COMMIT WORK.
 
     INSERT zalp_employee FROM TABLE @(
       VALUE #( ( employee_uuid         = 1000315
@@ -29,7 +34,6 @@ CLASS zcl_alp_rap_dev IMPLEMENTATION.
                  last_name             = 'Nobrega'
                  hired_date            = '20230917'
                  fired_date            = '99991231'
-                 status                = 'A'
                  created_by            = 'Andre'
                  created_at            = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
                  last_changed_by       = 'Andre'
@@ -42,7 +46,6 @@ CLASS zcl_alp_rap_dev IMPLEMENTATION.
                  last_name             = 'Palmeira'
                  hired_date            = '20221206'
                  fired_date            = '99991231'
-                 status                = 'A'
                  created_by            = 'Julio'
                  created_at            = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
                  last_changed_by       = 'Julio'
@@ -50,19 +53,95 @@ CLASS zcl_alp_rap_dev IMPLEMENTATION.
                  local_last_changed_at = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
                ) ) ).
 
-    COMMIT WORK.
-
-    DELETE FROM zalp_customer.
-
     INSERT zalp_customer FROM TABLE @(
-      VALUE #( ( customer_id = 100 descricao = 'NIO'   date_beg = '20250101' date_end = '20250531' )
-               ( customer_id = 200 descricao = 'TIM'   date_beg = '20250101' date_end = '20250531' )
-               ( customer_id = 300 descricao = 'CLARO' date_beg = '20250101' date_end = '20251130' )
-               ( customer_id = 400 descricao = 'VIVO'  date_beg = '20250101' date_end = '20251130' ) ) ).
+      VALUE #( ( customer_uuid         = 55000100
+                 customer_id           = 100
+                 descricao             = 'NIO'
+                 ativo                 = 'X'
+                 last_changed_by       = 'Julio'
+                 last_changed_at       = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 local_last_changed_at = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+               )
+               ( customer_uuid         = 55000200
+                 customer_id           = 200
+                 descricao             = 'TIM'
+                 ativo                 = 'X'
+                 last_changed_by       = 'Julio'
+                 last_changed_at       = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 local_last_changed_at = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+               )
+               ( customer_uuid         = 55000300
+                 customer_id           = 300
+                 descricao             = 'CLARO'
+                 ativo                 = 'X'
+                 last_changed_by       = 'Andre'
+                 last_changed_at       = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 local_last_changed_at = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+               ) ) ).
 
-    COMMIT WORK.
+    INSERT zalp_outsourcing FROM TABLE @(
+      VALUE #( ( outsource_uuid = 995000100
+                 date_beg       = '20250105'
+                 date_end       = '20250331'
+                 employee_uuid  = 1000315
+                 customer_uuid  = 55000200
+               )
+               ( outsource_uuid = 995000105
+                 date_beg       = '20250105'
+                 date_end       = '20250331'
+                 employee_uuid  = 1000298
+                 customer_uuid  = 55000200
+               )
+               ( outsource_uuid = 995000110
+                 date_beg       = '20250401'
+                 date_end       = '20250915'
+                 employee_uuid  = 1000315
+                 customer_uuid  = 55000100
+               )
+               ( outsource_uuid = 995000115
+                 date_beg       = '20250401'
+                 date_end       = '20251025'
+                 employee_uuid  = 1000298
+                 customer_uuid  = 55000300
+               ) ) ).
 
-    DELETE FROM zalp_activity.
+    INSERT zalp_activity FROM TABLE @(
+      VALUE #( ( activity_uuid         = 997500100
+                 date_activ            = '20250105'
+                 time_activ            = '080000'
+                 descricao             = 'Mapeamento de Necessidades'
+                 last_changed_by       = 'Sônia'
+                 last_changed_at       = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 local_last_changed_at = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 outsource_uuid        = 995000100
+               )
+               ( activity_uuid         = 997500101
+                 date_activ            = '20250105'
+                 time_activ            = '080000'
+                 descricao             = 'Mapeamento de Necessidades'
+                 last_changed_by       = 'Ricardo'
+                 last_changed_at       = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 local_last_changed_at = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 outsource_uuid        = 995000105
+               )
+               ( activity_uuid         = 997500102
+                 date_activ            = '20250401'
+                 time_activ            = '080000'
+                 descricao             = 'Inicio do Projeto'
+                 last_changed_by       = 'Sônia'
+                 last_changed_at       = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 local_last_changed_at = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 outsource_uuid        = 995000110
+               )
+               ( activity_uuid         = 997500103
+                 date_activ            = '20251025'
+                 time_activ            = '080000'
+                 descricao             = 'Entrega Final do Projeto'
+                 last_changed_by       = 'Ricardo'
+                 last_changed_at       = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 local_last_changed_at = cl_abap_context_info=>get_system_date( ) && cl_abap_context_info=>get_system_time( )
+                 outsource_uuid        = 995000115
+               ) ) ).
 
     COMMIT WORK.
 
